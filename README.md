@@ -10,7 +10,7 @@ I am very interested in those algorthms, so while I implemented it, I want to sh
 
 ## Implementation
 
-All implementation will be C++.
+All implementations will be C++.
 
 ## Test
 
