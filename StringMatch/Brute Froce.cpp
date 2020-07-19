@@ -1,44 +1,26 @@
-int KMP(char* txt, char* pat) {
+int BruteForce(const string& txt, const string& pat) {
     
-    int txtLen = strlen(txt);
-    int patLen = strlen(pat);
+    int txtLen = txt.size();
+    int patLen = pat.size();
     
-    int i = 0;
-    int j = 0;
+    int txtP = 0;
+    int patP = 0;
     
-    while (i < txtLen && j < patLen) {
-        if (j == -1 || txt[i] == pat[j]) {
-            i++;
-            j++;
+    while (txtP < txtLen && patP < patLen) {
+        if (txt[txtP] == pat[patP]) {
+            txtP++;
+            patP++;
         }
         else{
-            j = next[j];
+            txtP = txtP - patP + 1;
+            patP = 0;
         }
     }
     
-    if (j == patLen) {
-        return i - j;
+    if (patP == patLen) {
+        return txtP - patP;
     }
     else{
         return -1;
-    }
-}
-
-void GetNext(char* pat, int& next[])
-{
-    int patLen = strlen(pat);
-    next[0] = -1;
-    int k = -1;
-    int j = 0;
-    
-    while (j < patLen) {
-        if (k == -1 || p[j] == p[k]) {
-            ++k;
-            ++j;
-            next[j] = k;
-        }
-        else{
-            k = next[k];
-        }
     }
 }

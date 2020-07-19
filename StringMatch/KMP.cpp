@@ -1,41 +1,48 @@
-int KMP(char* txt, char* pat) {
+int KMP(const string& txt, const string& pat) {
     
-    int txtLen = strlen(txt);
-    int patLen = strlen(pat);
+    int txtLen = txt.size();
+    int patLen = pat.size();
     
-    int i = 0;
-    int j = 0;
+    if (patLen == 0) {
+        return 0;
+    }
     
-    while (i < txtLen && j < patLen) {
-        if (j == -1 || txt[i] == pat[j]) {
-            i++;
-            j++;
+    int next[patLen];
+    GetNext(pat, next);
+    
+    int txtP = 0;
+    int patP = 0;
+    
+    while (txtP < txtLen && patP < patLen) {
+        if (patP == -1 || txt[txtP] == pat[patP]) {
+            ++txtP;
+            ++patP;
         }
         else{
-            j = next[j];
+            patP = next[patP];
         }
     }
     
-    if (j == patLen) {
-        return i - j;
+    if (patP == patLen) {
+        return txtP - patP;
     }
     else{
         return -1;
     }
 }
 
-void GetNext(char* pat, int& next[])
+void GetNext(const string& pat, int next[])
 {
-    int patLen = strlen(pat);
+    int patLen = pat.size();
     next[0] = -1;
     int k = -1;
-    int j = 0;
+    int patP = 0;
     
-    while (j < patLen) {
-        if (k == -1 || p[j] == p[k]) {
+    while (patP < patLen - 1) {
+        if (k == -1 || pat[patP] == pat[k]) {
             ++k;
-            ++j;
-            next[j] = k;
+            ++patP;
+            next[patP] = k;
         }
         else{
             k = next[k];
